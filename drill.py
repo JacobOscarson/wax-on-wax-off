@@ -34,10 +34,7 @@ while remaining:
     elif b - a > 0 and negs[1]:
         expr, answer = exercise(b, a, '-')
     else:
-        if coin():
-            expr, answer = exercise(a, b, '+')
-        else:
-            expr, answer = exercise(b, a, '+')
+        expr, answer = coin() and exercise(a, b, '+') or exercise(b, a, '+')
     if '--ls' not in args:
         cand = raw_input(expr)
         if int(''.join(ch for ch in cand if ch in digits)) == answer:
