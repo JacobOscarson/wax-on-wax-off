@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
-from itertools import count, combinations, islice, izip
+import sys, time, random
 
-import time, random
-
-reaching = lambda n: islice(count(1), n)
 coin = lambda: random.choice((True, False))
 val = lambda: random.randint(1, 15)
+
+from operator import add, sub
 
 def quickClr():
     print(chr(27) + "[2J")
@@ -13,24 +12,32 @@ def quickClr():
 correct, incorrect = (0, 0)
 total = 10
 
-n = total
-while n:
-    quickClr()
+def exercise(a, b, op):
+    return '{} {} {} = '.format(a, op, b), {'+': add, '-': sub}[op](a, b)
+
+args = set(sys.argv)
+
+remaining = total
+while remaining:
+    remaining = remaining - 1
+    if '--ls' not in args:
+        quickClr()
     a, b = (val(), val())
-    if coin():
-        minus = coin()
-        if a - b > 0 and coin():
-            expr = '{} - {} = '.format(a,b)
-            answer = a - b
-            n -= 1
-        elif b - a > 0 and coin():
-            expr = '{} - {} = '.format(b, a)
-            answer = b - a
-            n -= 1
+    if '--prefer-sub' in args:
+        substract = coin()
+        negs = (substract, substract)
+    else:
+        negs = (coin(), coin())
+    if a - b > 0 and negs[0]:
+        expr, answer = exercise(a, b, '-')
+    elif b - a > 0 and negs[1]:
+        expr, answer = exercise(b, a, '-')
+    else:
+        if coin():
+            expr, answer = exercise(a, b, '+')
         else:
-            expr = '{} + {} = '.format(a,b)
-            answer = a + b
-            n -= 1
+            expr, answer = exercise(b, a, '+')
+    if '--ls' not in args:
         cand = raw_input(expr)
         if int(cand) == answer:
             print('RÄTT')
@@ -39,5 +46,8 @@ while n:
             print('FEL')
             incorrect += 1
         time.sleep(1)
+    else:
+        print(expr)
 
-print('Färdigt. {} rätt, {} fel (av {})'.format(correct, incorrect, total))
+if '--ls' not in args:
+    print('Färdigt. {} rätt, {} fel (av {})'.format(correct, incorrect, total))
