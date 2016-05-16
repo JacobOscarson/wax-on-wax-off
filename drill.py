@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import sys, time, random
+import os, sys, time, random
 
 coin = lambda: random.choice((True, False))
 val = lambda: random.randint(1, 15)
@@ -7,7 +7,7 @@ val = lambda: random.randint(1, 15)
 from operator import add, sub
 
 def quickClr():
-    print(chr(27) + "[2J")
+    os.system('clear')
 
 correct, incorrect = (0, 0)
 total = 10
