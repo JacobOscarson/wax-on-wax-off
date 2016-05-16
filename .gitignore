@@ -1,0 +1,17 @@
+.DS_Store
+*.pyc
+\.#*
+bin/
+lib/
+include/
+share/
+.Python
+*.egg
+.eyes
+.tox/
+*.egg-info
+docs/_build/
+docs/.mkhtml
+.wr
+dist/
+poc.py
