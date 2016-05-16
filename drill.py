@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import os, sys, time, random
+from string import digits
 
 coin = lambda: random.choice((True, False))
 val = lambda: random.randint(1, 15)
@@ -39,7 +40,7 @@ while remaining:
             expr, answer = exercise(b, a, '+')
     if '--ls' not in args:
         cand = raw_input(expr)
-        if int(cand) == answer:
+        if int(''.join(ch for ch in cand if ch in digits)) == answer:
             print('RÄTT')
             correct += 1
         else:
