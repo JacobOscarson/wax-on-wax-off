@@ -7,7 +7,7 @@ val = lambda: random.randint(1, 15)
 from operator import add, sub
 
 def quickClr():
-    os.system('clear')
+    sys.stderr.write("\x1b[2J\x1b[H")
 
 correct, incorrect = (0, 0)
 total = 10
