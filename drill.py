@@ -41,8 +41,9 @@ while remaining:
             print('RÄTT')
             correct += 1
         else:
-            print('FEL')
+            print('FEL, {} = {}'.format(expr, answer))
             incorrect += 1
+            time.sleep(1)
         time.sleep(1)
     else:
         print(expr)
