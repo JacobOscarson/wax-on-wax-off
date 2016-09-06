@@ -25,8 +25,8 @@ while remaining:
         quickClr()
     a, b = (val(), val())
     if '--prefer-sub' in args:
-        substract = coin()
-        negs = (substract, substract)
+        subtract = coin()
+        negs = (subtract, subtract)
     else:
         negs = (coin(), coin())
     if a - b > 0 and negs[0]:
