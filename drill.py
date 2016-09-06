@@ -18,6 +18,10 @@ def exercise(a, b, op):
 
 args = set(sys.argv)
 
+def say_wrong(expr, answer):
+    print('\nFEL, {} {}'.format(expr, answer))
+    time.sleep(1)
+
 remaining = total
 while remaining:
     remaining = remaining - 1
@@ -36,14 +40,18 @@ while remaining:
     else:
         expr, answer = coin() and exercise(a, b, '+') or exercise(b, a, '+')
     if '--ls' not in args:
-        cand = raw_input(expr)
-        if int(''.join(ch for ch in cand if ch in digits)) == answer:
-            print('RÄTT')
-            correct += 1
-        else:
-            print('\nFEL, {} {}'.format(expr, answer))
+        cand = ''.join(ch for ch in raw_input(expr) if ch in digits)
+        try:
+            if int(cand) == answer:
+                print('RÄTT')
+                correct += 1
+            else:
+                incorrect += 1
+                say_wrong(expr, answer)
+        except ValueError:
             incorrect += 1
-            time.sleep(1)
+            say_wrong(expr, answer)
+
         time.sleep(1)
     else:
         print(expr)
