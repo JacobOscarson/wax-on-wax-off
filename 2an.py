@@ -5,16 +5,16 @@ from string import digits
 coin = lambda: random.choice((True, False))
 val = lambda: random.randint(1, 15)
 
-from operator import add, sub
+from operator import mul, div
 
 def quickClr():
     sys.stderr.write("\x1b[2J\x1b[H")
 
 correct, incorrect = (0, 0)
-total = 10
+total = 25
 
 def exercise(a, b, op):
-    return '{} {} {} = '.format(a, op, b), {'+': add, '-': sub}[op](a, b)
+    return '{} {} {} = '.format(a, op, b), {'*': mul, '/': div}[op](a, b)
 
 args = set(sys.argv)
 
@@ -27,18 +27,18 @@ while remaining:
     remaining = remaining - 1
     if '--ls' not in args:
         quickClr()
-    a, b = (val(), val())
-    if '--prefer-sub' in args:
-        subtract = coin()
-        negs = (subtract, subtract)
+    a, b = (2, val())
+    if '--prefer-div' in args:
+        divide = coin()
+        divides = (divide, divide)
     else:
-        negs = (coin(), coin())
-    if a - b > 0 and negs[0]:
-        expr, answer = exercise(a, b, '-')
-    elif b - a > 0 and negs[1]:
-        expr, answer = exercise(b, a, '-')
+        divides = (coin(), coin())
+    if divmod(b, a)[1] == 0 and divides[0]:
+        expr, answer = exercise(b, a, '/')
+    # elif divmod(b, a)[1] == 0 and divides[1]:
+        # expr, answer = exercise(b, a, '/')
     else:
-        expr, answer = coin() and exercise(a, b, '+') or exercise(b, a, '+')
+        expr, answer = coin() and exercise(a, b, '*') or exercise(b, a, '*')
     if '--ls' not in args:
         cand = ''.join(ch for ch in raw_input(expr) if ch in digits)
         try:
